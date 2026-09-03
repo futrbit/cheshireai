@@ -1,0 +1,1660 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: #030508;
+    color: #dce8ef;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+
+/* =================================
+   MAIN ENVIRONMENT
+================================= */
+
+#system {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(40, 80, 100, 0.12) 0%,
+            rgba(3, 5, 8, 0.95) 45%,
+            #030508 100%
+        );
+}
+
+#network {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 1;
+}
+
+
+/* =================================
+   BRAND
+================================= */
+
+header {
+    position: absolute;
+
+    top: 32px;
+    left: 40px;
+
+    z-index: 10;
+}
+
+.brand {
+    font-size: 22px;
+
+    letter-spacing: 6px;
+
+    font-weight: 600;
+}
+
+.strapline {
+    margin-top: 7px;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.45;
+}
+
+
+/* =================================
+   STATUS
+================================= */
+
+#status {
+    position: absolute;
+
+    right: 40px;
+    top: 38px;
+
+    z-index: 10;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.65;
+}
+
+.status-dot {
+    display: inline-block;
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 8px;
+
+    border-radius: 50%;
+
+    background: #9de7b5;
+
+    box-shadow:
+        0 0 8px rgba(157, 231, 181, 0.8);
+
+    animation:
+        statusPulse 3s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 1;
+
+        box-shadow:
+            0 0 14px rgba(157, 231, 181, 0.95);
+    }
+}
+
+
+/* =================================
+   CENTRAL CORE
+================================= */
+
+#core {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 210px;
+    height: 210px;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 5;
+}
+
+.core-inner {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 100px;
+    height: 100px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(110, 180, 210, 0.35),
+            rgba(30, 70, 90, 0.12) 50%,
+            transparent 70%
+        );
+
+    border:
+        1px solid rgba(160, 220, 240, 0.5);
+
+    box-shadow:
+        0 0 30px rgba(90, 180, 220, 0.25),
+        inset 0 0 30px rgba(100, 190, 230, 0.15);
+
+    animation:
+        coreBreath 5s ease-in-out infinite;
+}
+
+@keyframes coreBreath {
+
+    0%,
+    100% {
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.035);
+    }
+}
+
+.core-inner span {
+    font-size: 9px;
+
+    letter-spacing: 4px;
+
+    opacity: 0.65;
+}
+
+.core-inner strong {
+    margin-top: 4px;
+
+    font-size: 25px;
+
+    letter-spacing: 5px;
+
+    font-weight: 400;
+}
+
+
+/* =================================
+   CORE RINGS
+================================= */
+
+.core-ring {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    border:
+        1px solid rgba(120, 200, 230, 0.28);
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%, -50%);
+}
+
+.ring-1 {
+    width: 130px;
+    height: 130px;
+
+    animation:
+        rotateRing 18s linear infinite;
+}
+
+.ring-2 {
+    width: 170px;
+    height: 170px;
+
+    animation:
+        rotateRingReverse 28s linear infinite;
+}
+
+.ring-3 {
+    width: 210px;
+    height: 210px;
+
+    animation:
+        rotateRing 40s linear infinite;
+}
+
+@keyframes rotateRing {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
+}
+
+@keyframes rotateRingReverse {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+}
+
+
+/* =================================
+   SERVICE NODES
+================================= */
+
+.system-node {
+    position: absolute;
+
+    width: 150px;
+
+    z-index: 6;
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    border:
+        none;
+
+    border-left:
+        1px solid rgba(160, 220, 240, 0.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(10, 20, 25, 0.42),
+            rgba(8, 15, 20, 0.25)
+        );
+
+    color:
+        inherit;
+
+    text-align:
+        left;
+
+    backdrop-filter:
+        blur(5px);
+
+    transition:
+        background 1s ease,
+        border-color 1s ease,
+        color 0.8s ease,
+        box-shadow 1s ease,
+        filter 1s ease;
+}
+
+
+/* =================================
+   NODE POSITIONING
+================================= */
+
+.node-launch {
+    left: 50%;
+    top: 17%;
+
+    transform:
+        translateX(-50%);
+
+    animation:
+        waveLaunch 10s ease-in-out infinite;
+}
+
+.node-automate {
+    right: 8%;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    animation:
+        waveAutomate 10s ease-in-out infinite;
+}
+
+.node-build {
+    left: 50%;
+    bottom: 19%;
+
+    transform:
+        translateX(-50%);
+
+    animation:
+        waveBuild 10s ease-in-out infinite;
+}
+
+.node-manage {
+    left: 8%;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    animation:
+        waveManage 10s ease-in-out infinite;
+}
+
+
+/* =================================
+   SLOW MAGNETIC WAVE
+================================= */
+
+@keyframes waveLaunch {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    25% {
+        transform:
+            translateX(-50%)
+            translateY(7px);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            translateY(12px);
+    }
+
+    75% {
+        transform:
+            translateX(-50%)
+            translateY(6px);
+    }
+}
+
+
+@keyframes waveAutomate {
+
+    0%,
+    100% {
+        transform:
+            translateY(-50%)
+            translateX(0);
+    }
+
+    25% {
+        transform:
+            translateY(-50%)
+            translateX(-7px);
+    }
+
+    50% {
+        transform:
+            translateY(-50%)
+            translateX(-12px);
+    }
+
+    75% {
+        transform:
+            translateY(-50%)
+            translateX(-6px);
+    }
+}
+
+
+@keyframes waveBuild {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    25% {
+        transform:
+            translateX(-50%)
+            translateY(-7px);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            translateY(-12px);
+    }
+
+    75% {
+        transform:
+            translateX(-50%)
+            translateY(-6px);
+    }
+}
+
+
+@keyframes waveManage {
+
+    0%,
+    100% {
+        transform:
+            translateY(-50%)
+            translateX(0);
+    }
+
+    25% {
+        transform:
+            translateY(-50%)
+            translateX(7px);
+    }
+
+    50% {
+        transform:
+            translateY(-50%)
+            translateX(12px);
+    }
+
+    75% {
+        transform:
+            translateY(-50%)
+            translateX(6px);
+    }
+}
+/* =================================
+   NODE HOVER / ACTIVE
+================================= */
+
+.node-launch:hover,
+.node-launch.active {
+    transform:
+        translateX(-50%)
+        scale(1.04);
+
+    animation:
+        nodeBreath 2.8s ease-in-out infinite;
+}
+
+.node-automate:hover,
+.node-automate.active {
+    transform:
+        translateY(-50%)
+        scale(1.04);
+
+    animation:
+        nodeBreath 2.8s ease-in-out infinite;
+}
+
+.node-build:hover,
+.node-build.active {
+    transform:
+        translateX(-50%)
+        scale(1.04);
+
+    animation:
+        nodeBreath 2.8s ease-in-out infinite;
+}
+
+.node-manage:hover,
+.node-manage.active {
+    transform:
+        translateY(-50%)
+        scale(1.04);
+
+    animation:
+        nodeBreath 2.8s ease-in-out infinite;
+}
+
+
+.system-node:hover,
+.system-node.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35, 75, 52, 0.48),
+            rgba(14, 35, 25, 0.32)
+        );
+
+    border-left-color:
+        rgba(120, 235, 155, 0.9);
+
+    color:
+        rgba(225, 255, 235, 0.98);
+
+    filter:
+        brightness(1.18);
+}
+
+@keyframes nodeBreath {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 10px rgba(90, 220, 135, 0.08),
+            inset 0 0 12px rgba(90, 220, 135, 0.03);
+    }
+
+    50% {
+        box-shadow:
+            0 0 28px rgba(90, 220, 135, 0.18),
+            inset 0 0 24px rgba(90, 220, 135, 0.07);
+    }
+}
+
+.system-node::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(120, 240, 160, 0.75),
+            transparent
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity 1s ease;
+
+    pointer-events: none;
+}
+
+.system-node:hover::after,
+.system-node.active::after {
+    opacity: 1;
+}
+
+.node-number {
+    display: block;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.35;
+
+    transition:
+        opacity 0.8s ease,
+        color 0.8s ease;
+}
+
+.node-name {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    letter-spacing: 3px;
+
+    transition:
+        text-shadow 0.8s ease,
+        letter-spacing 0.8s ease;
+}
+
+.system-node small {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.4;
+
+    transition:
+        opacity 0.8s ease,
+        color 0.8s ease;
+}
+
+.system-node:hover .node-number,
+.system-node.active .node-number {
+    opacity: 0.7;
+
+    color:
+        rgba(145, 240, 175, 0.9);
+}
+
+.system-node:hover .node-name,
+.system-node.active .node-name {
+    letter-spacing: 3.5px;
+
+    text-shadow:
+        0 0 14px rgba(110, 240, 155, 0.35);
+}
+
+.system-node:hover small,
+.system-node.active small {
+    opacity: 0.7;
+
+    color:
+        rgba(180, 245, 200, 0.85);
+}
+
+
+/* =================================
+   SERVICE INFORMATION PANEL
+================================= */
+
+#info-panel {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 380px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(25px);
+
+    z-index: 20;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(12, 25, 32, 0.95),
+            rgba(4, 10, 14, 0.94)
+        );
+
+    border:
+        1px solid rgba(150, 220, 240, 0.25);
+
+    box-shadow:
+        0 0 40px rgba(70, 160, 200, 0.12),
+        inset 0 0 30px rgba(100, 190, 230, 0.04);
+
+    backdrop-filter:
+        blur(15px);
+
+    opacity: 0;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+#info-panel.active {
+    opacity: 1;
+
+    pointer-events:
+        auto;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(0);
+}
+
+#close-panel,
+#close-secondary {
+    position: absolute;
+
+    right: 14px;
+    top: 10px;
+
+    background: none;
+
+    border: none;
+
+    color:
+        rgba(220, 240, 250, 0.6);
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        color 0.3s ease;
+}
+
+#close-panel:hover,
+#close-secondary:hover {
+    color:
+        rgba(180, 250, 205, 0.95);
+}
+
+.panel-number,
+.secondary-number {
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.35;
+}
+
+.panel-title,
+.secondary-title {
+    margin-top: 8px;
+
+    font-size: 25px;
+
+    letter-spacing: 6px;
+}
+
+.panel-subtitle,
+.secondary-subtitle {
+    margin-top: 5px;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.45;
+}
+
+#panel-description {
+    margin-top: 22px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    color:
+        rgba(220, 235, 242, 0.75);
+}
+
+
+/* =================================
+   SYSTEM FLOW
+================================= */
+
+.flow-label {
+    margin-top: 24px;
+}
+
+#panel-flow {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 12px;
+}
+
+.flow-node {
+    padding: 6px 8px;
+
+    border:
+        1px solid rgba(130, 210, 230, 0.18);
+
+    background:
+        rgba(40, 70, 80, 0.18);
+
+    font-size: 7px;
+
+    letter-spacing: 1.2px;
+
+    color:
+        rgba(210, 235, 242, 0.7);
+
+    transition:
+        border-color 0.5s ease,
+        background 0.5s ease,
+        color 0.5s ease;
+}
+
+.flow-arrow {
+    font-size: 10px;
+
+    opacity: 0.25;
+}
+
+#info-panel.active .flow-node {
+    border-color:
+        rgba(110, 215, 150, 0.2);
+}
+
+
+/* =================================
+   PANEL DIVIDER
+================================= */
+
+.panel-divider {
+    height: 1px;
+
+    margin: 22px 0;
+
+    background:
+        rgba(150, 220, 240, 0.12);
+}
+
+
+/* =================================
+   PANEL CAPABILITIES
+================================= */
+
+.panel-label {
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.35;
+}
+
+.panel-items {
+    margin-top: 10px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 8px 14px;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+
+    letter-spacing: 1.4px;
+
+    opacity: 0.65;
+}
+
+.panel-item {
+    padding-left: 9px;
+
+    border-left:
+        1px solid rgba(120, 200, 220, 0.18);
+}
+
+
+/* =================================
+   PANEL ACTION
+================================= */
+
+.panel-action {
+    margin-top: 24px;
+
+    padding: 10px 16px;
+
+    background: transparent;
+
+    border:
+        1px solid rgba(150, 220, 240, 0.25);
+
+    color:
+        rgba(220, 240, 250, 0.75);
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.5s ease,
+        background 0.5s ease,
+        color 0.5s ease;
+}
+
+.panel-action:hover {
+    background:
+        rgba(90, 200, 130, 0.08);
+
+    border-color:
+        rgba(110, 225, 150, 0.5);
+
+    color:
+        rgba(190, 250, 210, 0.95);
+}
+
+
+/* =================================
+   SECONDARY NAVIGATION
+================================= */
+
+#secondary-nav {
+    position: absolute;
+
+    left: 50%;
+    bottom: 78px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 12;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+#secondary-nav button {
+    position: relative;
+
+    min-width: 105px;
+
+    padding: 10px 14px;
+
+    background:
+        rgba(7, 14, 18, 0.38);
+
+    border:
+        1px solid rgba(130, 200, 220, 0.12);
+
+    color:
+        rgba(215, 235, 242, 0.65);
+
+    cursor: pointer;
+
+    text-align: left;
+
+    backdrop-filter:
+        blur(5px);
+
+    transition:
+        background 0.8s ease,
+        border-color 0.8s ease,
+        color 0.8s ease,
+        box-shadow 0.8s ease;
+}
+
+#secondary-nav button span {
+    display: block;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+}
+
+#secondary-nav button small {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 6px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.35;
+}
+
+#secondary-nav button:hover {
+
+    background:
+        rgba(25, 60, 45, 0.38);
+
+    border-color:
+        rgba(110, 220, 150, 0.45);
+
+    color:
+        rgba(220, 255, 232, 0.95);
+
+    box-shadow:
+        0 0 20px rgba(80, 210, 130, 0.08);
+}
+
+
+/* =================================
+   SECONDARY PANEL
+================================= */
+
+#secondary-panel {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: min(850px, calc(100vw - 60px));
+
+    max-height: 82vh;
+
+    overflow-y: auto;
+
+    padding: 42px;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(25px);
+
+    z-index: 30;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(9, 20, 26, 0.97),
+            rgba(3, 8, 12, 0.96)
+        );
+
+    border:
+        1px solid rgba(150, 220, 240, 0.22);
+
+    box-shadow:
+        0 0 70px rgba(40, 130, 170, 0.12),
+        inset 0 0 50px rgba(100, 190, 230, 0.035);
+
+    backdrop-filter:
+        blur(18px);
+
+    opacity: 0;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+#secondary-panel.active {
+    opacity: 1;
+
+    pointer-events:
+        auto;
+
+    transform:
+        translate(-50%, -50%)
+        translateY(0);
+}
+
+
+/* =================================
+   SECONDARY CONTENT
+================================= */
+
+.secondary-content {
+    display: none;
+}
+
+.secondary-content.active {
+    display: block;
+
+    animation:
+        contentAppear 0.5s ease;
+}
+
+@keyframes contentAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+.secondary-intro {
+    max-width: 620px;
+
+    margin-top: 22px;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    color:
+        rgba(220, 235, 242, 0.68);
+}
+
+
+/* =================================
+   WORK / PROJECTS
+================================= */
+
+.project-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-top: 32px;
+}
+
+.project-card {
+    min-height: 220px;
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(130, 205, 225, 0.13);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20, 38, 45, 0.28),
+            rgba(7, 15, 20, 0.24)
+        );
+
+    transition:
+        border-color 0.7s ease,
+        background 0.7s ease,
+        transform 0.7s ease,
+        box-shadow 0.7s ease;
+}
+
+.project-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(110, 220, 150, 0.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25, 65, 45, 0.34),
+            rgba(8, 20, 15, 0.28)
+        );
+
+    box-shadow:
+        0 12px 35px rgba(50, 180, 110, 0.06);
+}
+
+.project-code {
+    font-size: 7px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.3;
+}
+
+.project-card h3 {
+    margin-top: 15px;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    font-weight: 400;
+}
+
+.project-card p {
+    margin-top: 16px;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    color:
+        rgba(220, 235, 242, 0.58);
+}
+
+.project-tags {
+    margin-top: 20px;
+
+    font-size: 7px;
+
+    letter-spacing: 1.4px;
+
+    color:
+        rgba(140, 220, 160, 0.55);
+}
+
+
+/* =================================
+   ABOUT
+================================= */
+
+.about-statement {
+    max-width: 650px;
+
+    margin-top: 28px;
+
+    font-size: 21px;
+
+    line-height: 1.5;
+
+    letter-spacing: 1px;
+
+    color:
+        rgba(225, 245, 250, 0.85);
+}
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 40px;
+
+    margin-top: 38px;
+}
+
+.about-grid p {
+    margin-top: 12px;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+    color:
+        rgba(220, 235, 242, 0.58);
+}
+
+.about-flow {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 42px;
+
+    padding: 18px;
+
+    border:
+        1px solid rgba(130, 205, 225, 0.12);
+
+    background:
+        rgba(10, 25, 30, 0.2);
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+}
+
+.about-flow span {
+    color:
+        rgba(190, 235, 215, 0.7);
+}
+
+.about-flow b {
+    font-weight: 400;
+
+    opacity: 0.25;
+}
+
+.about-footer {
+    margin-top: 32px;
+
+    font-size: 7px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.3;
+}
+
+
+/* =================================
+   CONTACT
+================================= */
+
+#contact-form {
+    margin-top: 30px;
+
+    max-width: 700px;
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 18px;
+}
+
+#contact-form label {
+    display: block;
+
+    margin-bottom: 18px;
+
+    font-size: 7px;
+
+    letter-spacing: 2px;
+
+    opacity: 0.45;
+}
+
+#contact-form input,
+#contact-form textarea {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 12px 13px;
+
+    background:
+        rgba(4, 11, 15, 0.7);
+
+    border:
+        1px solid rgba(130, 205, 225, 0.16);
+
+    color:
+        rgba(225, 245, 250, 0.9);
+
+    outline: none;
+
+    resize: vertical;
+
+    transition:
+        border-color 0.5s ease,
+        background 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    border-color:
+        rgba(110, 220, 150, 0.45);
+
+    background:
+        rgba(12, 28, 20, 0.55);
+
+    box-shadow:
+        0 0 18px rgba(70, 200, 120, 0.05);
+}
+
+#contact-form input::placeholder,
+#contact-form textarea::placeholder {
+    color:
+        rgba(210, 230, 235, 0.25);
+}
+
+.contact-submit {
+    margin-top: 4px;
+
+    padding: 12px 20px;
+
+    background:
+        rgba(30, 65, 48, 0.28);
+
+    border:
+        1px solid rgba(110, 220, 150, 0.3);
+
+    color:
+        rgba(205, 250, 220, 0.78);
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.5s ease,
+        border-color 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+.contact-submit:hover {
+    background:
+        rgba(40, 90, 60, 0.4);
+
+    border-color:
+        rgba(120, 235, 160, 0.65);
+
+    box-shadow:
+        0 0 25px rgba(80, 210, 130, 0.08);
+}
+
+#contact-response {
+    margin-top: 18px;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+
+    letter-spacing: 1px;
+
+    color:
+        rgba(150, 240, 180, 0.75);
+}
+
+
+/* =================================
+   CORE MESSAGE
+================================= */
+
+#core-message {
+    position: absolute;
+
+    bottom: 35px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 10;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+.message-main {
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    opacity: 0.6;
+}
+
+.message-sub {
+    margin-top: 6px;
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    opacity: 0.3;
+}
+
+
+/* =================================
+   SCROLLBAR
+================================= */
+
+#info-panel::-webkit-scrollbar,
+#secondary-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+#info-panel::-webkit-scrollbar-track,
+#secondary-panel::-webkit-scrollbar-track {
+    background:
+        rgba(0, 0, 0, 0.15);
+}
+
+#info-panel::-webkit-scrollbar-thumb,
+#secondary-panel::-webkit-scrollbar-thumb {
+    background:
+        rgba(120, 210, 230, 0.18);
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 800px) {
+
+    #secondary-panel {
+        width:
+            calc(100vw - 30px);
+
+        padding:
+            28px;
+    }
+
+    .project-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .about-grid {
+        grid-template-columns:
+            1fr;
+
+        gap: 25px;
+    }
+
+    .form-row {
+        grid-template-columns:
+            1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    #info-panel {
+        width:
+            calc(100vw - 40px);
+
+        max-width:
+            380px;
+
+        padding:
+            24px;
+    }
+
+    header {
+        left: 20px;
+        top: 20px;
+    }
+
+    #status {
+        right: 20px;
+        top: 25px;
+    }
+
+    .node-launch {
+        top: 20%;
+    }
+
+    .node-build {
+        bottom: 19%;
+    }
+
+    .system-node {
+        width: 135px;
+    }
+
+    .panel-items {
+        grid-template-columns:
+            1fr;
+    }
+
+    #secondary-nav {
+        bottom: 72px;
+
+        gap: 5px;
+    }
+
+    #secondary-nav button {
+        min-width: 88px;
+
+        padding:
+            8px 9px;
+    }
+
+    #secondary-nav button span {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    #secondary-nav button small {
+        display: none;
+    }
+
+    .secondary-title {
+        font-size: 21px;
+    }
+
+    .about-statement {
+        font-size: 17px;
+    }
+}
+

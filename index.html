@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cheshire AI — Intelligent Systems</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main id="system">
+
+    <canvas id="network"></canvas>
+
+
+    <!-- =============================
+         BRAND
+    ============================== -->
+
+    <header>
+        <div class="brand">CHESHIRE AI</div>
+        <div class="strapline">
+            AI • AUTOMATION • DIGITAL SYSTEMS
+        </div>
+    </header>
+
+
+    <!-- =============================
+         STATUS
+    ============================== -->
+
+    <div id="status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
+
+    <!-- =============================
+         CENTRAL CORE
+    ============================== -->
+
+    <div id="core">
+
+        <div class="core-ring ring-1"></div>
+        <div class="core-ring ring-2"></div>
+        <div class="core-ring ring-3"></div>
+
+        <div class="core-inner">
+            <span>CHESHIRE</span>
+            <strong>AI</strong>
+        </div>
+
+    </div>
+
+
+    <!-- =============================
+         SERVICE SYSTEMS
+    ============================== -->
+
+    <button class="system-node node-launch" data-system="launch">
+        <span class="node-number">01</span>
+        <span class="node-name">LAUNCH</span>
+        <small>Digital Presence</small>
+    </button>
+
+
+    <button class="system-node node-automate" data-system="automate">
+        <span class="node-number">02</span>
+        <span class="node-name">AUTOMATE</span>
+        <small>Intelligent Workflows</small>
+    </button>
+
+
+    <button class="system-node node-build" data-system="build">
+        <span class="node-number">03</span>
+        <span class="node-name">BUILD</span>
+        <small>AI Systems</small>
+    </button>
+
+
+    <button class="system-node node-manage" data-system="manage">
+        <span class="node-number">04</span>
+        <span class="node-name">MANAGE</span>
+        <small>Live Operations</small>
+    </button>
+
+
+    <!-- =============================
+         INFORMATION PANEL
+    ============================== -->
+
+    <section id="info-panel">
+
+        <button id="close-panel" aria-label="Close">×</button>
+
+        <div class="panel-number" id="panel-number">
+            01
+        </div>
+
+        <div class="panel-title" id="panel-title">
+            LAUNCH
+        </div>
+
+        <div class="panel-subtitle" id="panel-subtitle">
+            DIGITAL PRESENCE
+        </div>
+
+        <p id="panel-description">
+            We create the digital front door to your business.
+        </p>
+
+
+        <div class="panel-label flow-label">
+            SYSTEM FLOW
+        </div>
+
+        <div id="panel-flow"></div>
+
+
+        <div class="panel-divider"></div>
+
+
+        <div class="panel-label">
+            CAPABILITIES
+        </div>
+
+        <div class="panel-items" id="panel-items"></div>
+
+
+        <button class="panel-action">
+            EXPLORE SYSTEM
+        </button>
+
+    </section>
+
+
+    <!-- =============================
+         SECONDARY NAVIGATION
+    ============================== -->
+
+    <nav id="secondary-nav">
+
+        <button data-section="work">
+            <span>WORK</span>
+            <small>SYSTEM ARCHIVE</small>
+        </button>
+
+        <button data-section="about">
+            <span>ABOUT</span>
+            <small>CHESHIRE AI</small>
+        </button>
+
+        <button data-section="contact">
+            <span>CONTACT</span>
+            <small>START A CONVERSATION</small>
+        </button>
+
+    </nav>
+
+
+    <!-- =============================
+         SECONDARY PANEL
+    ============================== -->
+
+    <section id="secondary-panel">
+
+        <button id="close-secondary" aria-label="Close">
+            ×
+        </button>
+
+
+        <!-- WORK -->
+
+        <div class="secondary-content" id="section-work">
+
+            <div class="secondary-number">
+                ARCHIVE / 01
+            </div>
+
+            <div class="secondary-title">
+                WORK
+            </div>
+
+            <div class="secondary-subtitle">
+                SYSTEMS WE HAVE BUILT
+            </div>
+
+            <p class="secondary-intro">
+                A selection of environments, digital systems and
+                experiments built by Cheshire AI.
+            </p>
+
+
+            <div class="project-grid">
+
+                <article class="project-card">
+
+                    <div class="project-code">
+                        SYSTEM / 001
+                    </div>
+
+                    <h3>
+                        DETROIT PROJECT
+                    </h3>
+
+                    <p>
+                        Interactive music environment combining
+                        spatial interface design, audio and
+                        living digital elements.
+                    </p>
+
+                    <div class="project-tags">
+                        SPATIAL UI · AUDIO · JAVASCRIPT
+                    </div>
+
+                </article>
+
+
+                <article class="project-card">
+
+                    <div class="project-code">
+                        SYSTEM / 002
+                    </div>
+
+                    <h3>
+                        MICHAEL KENNEDY
+                    </h3>
+
+                    <p>
+                        Living personal environment with
+                        interactive content, real-time lighting,
+                        weather and spatial navigation.
+                    </p>
+
+                    <div class="project-tags">
+                        SPATIAL UI · ANIMATION · WEB
+                    </div>
+
+                </article>
+
+
+                <article class="project-card">
+
+                    <div class="project-code">
+                        SYSTEM / 003
+                    </div>
+
+                    <h3>
+                        MACHINA DAILY
+                    </h3>
+
+                    <p>
+                        Autonomous publishing system combining
+                        news ingestion, AI rewriting and
+                        automated content workflows.
+                    </p>
+
+                    <div class="project-tags">
+                        AI · AUTOMATION · PYTHON
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- ABOUT -->
+
+        <div class="secondary-content" id="section-about">
+
+            <div class="secondary-number">
+                SYSTEM / IDENTITY
+            </div>
+
+            <div class="secondary-title">
+                ABOUT
+            </div>
+
+            <div class="secondary-subtitle">
+                CHESHIRE AI
+            </div>
+
+            <p class="about-statement">
+                Cheshire AI builds intelligent systems that
+                remove repetitive work from businesses.
+            </p>
+
+
+            <div class="about-grid">
+
+                <div>
+                    <div class="panel-label">
+                        WHAT WE BELIEVE
+                    </div>
+
+                    <p>
+                        AI should not be another piece of software
+                        your business has to learn. It should become
+                        part of the machinery that makes the business
+                        operate.
+                    </p>
+                </div>
+
+
+                <div>
+                    <div class="panel-label">
+                        HOW WE WORK
+                    </div>
+
+                    <p>
+                        We look at how a business actually works,
+                        identify repetitive processes and build
+                        practical digital systems around them.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="about-flow">
+
+                <span>BUSINESS</span>
+                <b>→</b>
+                <span>DATA</span>
+                <b>→</b>
+                <span>AI</span>
+                <b>→</b>
+                <span>AUTOMATION</span>
+                <b>→</b>
+                <span>OUTCOME</span>
+
+            </div>
+
+
+            <div class="about-footer">
+                AI • AUTOMATION • DIGITAL SYSTEMS
+            </div>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="secondary-content" id="section-contact">
+
+            <div class="secondary-number">
+                SYSTEM / ENQUIRY
+            </div>
+
+            <div class="secondary-title">
+                CONTACT
+            </div>
+
+            <div class="secondary-subtitle">
+                START A CONVERSATION
+            </div>
+
+            <p class="secondary-intro">
+                Tell us what is happening inside your business.
+                We can identify where intelligent systems could
+                remove repetitive work or create new capability.
+            </p>
+
+
+            <form id="contact-form">
+
+                <div class="form-row">
+
+                    <label>
+                        NAME
+
+                        <input
+                            type="text"
+                            id="contact-name"
+                            placeholder="Your name"
+                            required
+                        >
+
+                    </label>
+
+
+                    <label>
+                        EMAIL
+
+                        <input
+                            type="email"
+                            id="contact-email"
+                            placeholder="you@company.com"
+                            required
+                        >
+
+                    </label>
+
+                </div>
+
+
+                <label>
+                    BUSINESS
+
+                    <input
+                        type="text"
+                        id="contact-business"
+                        placeholder="Your business"
+                    >
+
+                </label>
+
+
+                <label>
+                    WHAT WOULD YOU LIKE TO IMPROVE?
+
+                    <textarea
+                        id="contact-message"
+                        rows="5"
+                        placeholder="Tell us about the repetitive work, problem or opportunity..."
+                        required
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="contact-submit"
+                >
+                    TRANSMIT ENQUIRY
+                </button>
+
+            </form>
+
+
+            <div id="contact-response"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =============================
+         CORE MESSAGE
+    ============================== -->
+
+    <div id="core-message">
+
+        <div class="message-main">
+            WE BUILD THE MACHINERY
+        </div>
+
+        <div class="message-sub">
+            THAT MAKES BUSINESSES RUN BETTER
+        </div>
+
+    </div>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
