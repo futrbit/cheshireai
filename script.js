@@ -1,8 +1,8 @@
 const canvas = document.getElementById("network");
 const ctx = canvas.getContext("2d");
 
-let width;
-let height;
+let width = 0;
+let height = 0;
 
 let particles = [];
 let dataPackets = [];
@@ -12,29 +12,57 @@ let selectedSystem = null;
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 
-let lastMouseX = mouseX;
-let lastMouseY = mouseY;
-let mouseVelocity = 0;
+let targetMouseX = mouseX;
+let targetMouseY = mouseY;
 
-window.addEventListener("mousemove", e => {
+let scrollProgress = 0;
+let smoothScroll = 0;
 
-    const dx = e.clientX - mouseX;
-    const dy = e.clientY - mouseY;
+let time = 0;
 
-    const movement =
-        Math.sqrt(
-            dx * dx +
-            dy * dy
-        );
 
-    mouseVelocity =
-        Math.min(
-            movement,
-            80
-        );
+/* =================================
+   BAUHAUS PALETTE
+================================= */
 
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+const COLORS = {
+    black: "#111111",
+    red: "#e63b32",
+    yellow: "#f2c230",
+    blue: "#1688c9",
+    paper: "#f5f4ef"
+};
+
+
+/* =================================
+   MOUSE
+================================= */
+
+window.addEventListener("mousemove", event => {
+
+    targetMouseX = event.clientX;
+    targetMouseY = event.clientY;
+
+});
+
+
+/* =================================
+   SCROLL
+================================= */
+
+window.addEventListener("scroll", () => {
+
+    const maxScroll =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+    if (maxScroll <= 0) {
+        scrollProgress = 0;
+        return;
+    }
+
+    scrollProgress =
+        window.scrollY / maxScroll;
 
 });
 
@@ -56,36 +84,86 @@ resize();
 
 
 /* =================================
-   BACKGROUND PARTICLES
+   PARTICLES
 ================================= */
 
-for (let i = 0; i < 180; i++) {
+for (let i = 0; i < 90; i++) {
 
     particles.push({
 
-        angle:
+        x:
+            Math.random(),
+
+        y:
+            Math.random(),
+
+        size:
+            Math.random() > 0.85
+                ? 3
+                : 1,
+
+        speed:
+            0.00015 +
+            Math.random() * 0.00045,
+
+        phase:
             Math.random() *
             Math.PI *
             2,
 
-        radius:
-            100 +
-            Math.random() *
-            560,
-
-        speed:
-            0.0005 +
-            Math.random() *
-            0.0018,
-
-        size:
-            0.5 +
-            Math.random() *
-            1.5
+        type:
+            Math.floor(
+                Math.random() * 3
+            )
 
     });
 
 }
+
+
+/* =================================
+   GEOMETRIC OBJECTS
+================================= */
+
+const shapes = [
+
+    {
+        x: 0.17,
+        y: 0.27,
+        size: 85,
+        rotation: 0.2,
+        type: "square",
+        color: COLORS.red
+    },
+
+    {
+        x: 0.82,
+        y: 0.22,
+        size: 55,
+        rotation: 0,
+        type: "circle",
+        color: COLORS.yellow
+    },
+
+    {
+        x: 0.78,
+        y: 0.76,
+        size: 100,
+        rotation: 0.4,
+        type: "square",
+        color: COLORS.blue
+    },
+
+    {
+        x: 0.18,
+        y: 0.76,
+        size: 45,
+        rotation: 0,
+        type: "circle",
+        color: COLORS.black
+    }
+
+];
 
 
 /* =================================
@@ -94,26 +172,53 @@ for (let i = 0; i < 180; i++) {
 
 function getSystemPositions() {
 
+    const scrollOffset =
+        smoothScroll * height * 0.10;
+
     return {
 
         launch: {
-            x: width * 0.50,
-            y: height * 0.17
+
+            x:
+                width * 0.50,
+
+            y:
+                height * 0.15 -
+                scrollOffset
+
         },
 
         automate: {
-            x: width * 0.92,
-            y: height * 0.50
+
+            x:
+                width * 0.90,
+
+            y:
+                height * 0.50 -
+                scrollOffset * 0.25
+
         },
 
         build: {
-            x: width * 0.50,
-            y: height * 0.88
+
+            x:
+                width * 0.50,
+
+            y:
+                height * 0.84 -
+                scrollOffset
+
         },
 
         manage: {
-            x: width * 0.08,
-            y: height * 0.50
+
+            x:
+                width * 0.10,
+
+            y:
+                height * 0.50 -
+                scrollOffset * 0.25
+
         }
 
     };
@@ -122,7 +227,29 @@ function getSystemPositions() {
 
 
 /* =================================
-   CREATE DATA PACKET
+   CORE POSITION
+================================= */
+
+function getCorePosition() {
+
+    return {
+
+        x:
+            width / 2,
+
+        y:
+            height / 2 -
+            smoothScroll *
+            height *
+            0.08
+
+    };
+
+}
+
+
+/* =================================
+   DATA PACKET
 ================================= */
 
 function createPacket(from, to) {
@@ -135,9 +262,12 @@ function createPacket(from, to) {
         progress: 0,
 
         speed:
-            0.004 +
-            Math.random() *
-            0.004
+            0.0025 +
+            Math.random() * 0.003,
+
+        size:
+            2 +
+            Math.random() * 2
 
     });
 
@@ -155,7 +285,7 @@ setInterval(() => {
         "launch"
     );
 
-}, 900);
+}, 1000);
 
 
 setInterval(() => {
@@ -165,7 +295,7 @@ setInterval(() => {
         "automate"
     );
 
-}, 1200);
+}, 1300);
 
 
 setInterval(() => {
@@ -175,7 +305,7 @@ setInterval(() => {
         "build"
     );
 
-}, 1000);
+}, 1100);
 
 
 setInterval(() => {
@@ -185,51 +315,266 @@ setInterval(() => {
         "manage"
     );
 
-}, 1300);
+}, 1400);
 
 
 /* =================================
-   DRAW CONNECTION
+   DRAW TECHNICAL GRID
 ================================= */
 
-function drawConnection(
-    x1,
-    y1,
-    x2,
-    y2,
-    active = false
-) {
+function drawGrid() {
 
-    ctx.beginPath();
+    const spacing = 70;
 
-    ctx.moveTo(
-        x1,
-        y1
-    );
+    const offset =
+        (time * 0.015) +
+        (smoothScroll * 120);
 
-    ctx.lineTo(
-        x2,
-        y2
-    );
+    ctx.save();
 
-    ctx.strokeStyle = active
+    ctx.strokeStyle =
+        "rgba(17,17,17,0.055)";
 
-        ? "rgba(150,230,250,0.45)"
+    ctx.lineWidth = 1;
 
-        : "rgba(100,180,210,0.16)";
+    const startX =
+        -spacing +
+        (offset % spacing);
 
-    ctx.lineWidth =
-        active
-            ? 2
-            : 1;
+    const startY =
+        -spacing +
+        ((offset * 0.65) % spacing);
 
-    ctx.stroke();
+
+    for (
+        let x = startX;
+        x < width;
+        x += spacing
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(x, 0);
+
+        ctx.lineTo(
+            x,
+            height
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    for (
+        let y = startY;
+        y < height;
+        y += spacing
+    ) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, y);
+
+        ctx.lineTo(
+            width,
+            y
+        );
+
+        ctx.stroke();
+
+    }
+
+    ctx.restore();
 
 }
 
 
 /* =================================
-   DRAW DATA PACKET
+   DRAW CROSS AXIS
+================================= */
+
+function drawAxis(core) {
+
+    ctx.save();
+
+    ctx.strokeStyle =
+        "rgba(17,17,17,0.16)";
+
+    ctx.lineWidth = 1;
+
+    ctx.setLineDash([
+        8,
+        8
+    ]);
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        core.y
+    );
+
+    ctx.lineTo(
+        width,
+        core.y
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        core.x,
+        0
+    );
+
+    ctx.lineTo(
+        core.x,
+        height
+    );
+
+    ctx.stroke();
+
+
+    ctx.setLineDash([]);
+
+    ctx.restore();
+
+}
+
+
+/* =================================
+   DRAW SYSTEM CONNECTION
+================================= */
+
+function drawConnection(
+    start,
+    end,
+    color,
+    active = false
+) {
+
+    const dx =
+        end.x -
+        start.x;
+
+    const dy =
+        end.y -
+        start.y;
+
+    const bend =
+        Math.min(
+            Math.abs(dx),
+            Math.abs(dy)
+        ) *
+        0.18;
+
+
+    ctx.save();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        start.x,
+        start.y
+    );
+
+
+    if (
+        Math.abs(dx) >
+        Math.abs(dy)
+    ) {
+
+        ctx.lineTo(
+            start.x + dx * 0.5,
+            start.y
+        );
+
+        ctx.lineTo(
+            start.x + dx * 0.5,
+            end.y
+        );
+
+        ctx.lineTo(
+            end.x,
+            end.y
+        );
+
+    } else {
+
+        ctx.lineTo(
+            start.x,
+            start.y + dy * 0.5
+        );
+
+        ctx.lineTo(
+            end.x,
+            start.y + dy * 0.5
+        );
+
+        ctx.lineTo(
+            end.x,
+            end.y
+        );
+
+    }
+
+
+    ctx.strokeStyle =
+        active
+            ? color
+            : "rgba(17,17,17,0.22)";
+
+    ctx.lineWidth =
+        active
+            ? 3
+            : 1;
+
+    ctx.stroke();
+
+    ctx.restore();
+
+}
+
+
+/* =================================
+   DRAW SIGNAL MARKER
+================================= */
+
+function drawSignal(
+    x,
+    y,
+    color,
+    size = 7
+) {
+
+    ctx.save();
+
+    ctx.translate(
+        x,
+        y
+    );
+
+    ctx.fillStyle =
+        color;
+
+    ctx.fillRect(
+        -size / 2,
+        -size / 2,
+        size,
+        size
+    );
+
+    ctx.restore();
+
+}
+
+
+/* =================================
+   DRAW PACKET
 ================================= */
 
 function drawPacket(
@@ -237,19 +582,19 @@ function drawPacket(
     positions
 ) {
 
-    const cx = width / 2;
-    const cy = height / 2;
+    const core =
+        getCorePosition();
+
 
     let start;
     let end;
 
 
-    if (packet.from === "core") {
+    if (
+        packet.from === "core"
+    ) {
 
-        start = {
-            x: cx,
-            y: cy
-        };
+        start = core;
 
     } else {
 
@@ -261,12 +606,11 @@ function drawPacket(
     }
 
 
-    if (packet.to === "core") {
+    if (
+        packet.to === "core"
+    ) {
 
-        end = {
-            x: cx,
-            y: cy
-        };
+        end = core;
 
     } else {
 
@@ -278,64 +622,401 @@ function drawPacket(
     }
 
 
+    const progress =
+        packet.progress;
+
+
     const x =
         start.x +
         (end.x - start.x) *
-        packet.progress;
+        progress;
 
 
     const y =
         start.y +
         (end.y - start.y) *
-        packet.progress;
+        progress;
 
 
-    ctx.beginPath();
+    const colors = [
+        COLORS.red,
+        COLORS.yellow,
+        COLORS.blue
+    ];
 
-    ctx.arc(
+
+    const color =
+        colors[
+            Math.floor(
+                packet.progress * 3
+            ) % 3
+        ];
+
+
+    drawSignal(
         x,
         y,
-        7,
-        0,
-        Math.PI * 2
+        color,
+        packet.size + 2
     );
-
-    ctx.fillStyle =
-        "rgba(120,220,250,0.10)";
-
-    ctx.fill();
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x,
-        y,
-        2.5,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fillStyle =
-        "rgba(210,250,255,1)";
-
-    ctx.shadowBlur = 15;
-
-    ctx.shadowColor =
-        "rgba(120,230,255,1)";
-
-    ctx.fill();
-
-    ctx.shadowBlur = 0;
 
 }
 
 
 /* =================================
-   DRAW ENVIRONMENT
+   DRAW BAUHAUS SHAPES
+================================= */
+
+function drawShapes() {
+
+    shapes.forEach(
+        (shape, index) => {
+
+            const mouseInfluenceX =
+                (mouseX / width - 0.5) *
+                30;
+
+            const mouseInfluenceY =
+                (mouseY / height - 0.5) *
+                30;
+
+
+            const x =
+                width *
+                shape.x +
+                mouseInfluenceX *
+                (index % 2 === 0
+                    ? 1
+                    : -1);
+
+
+            const y =
+                height *
+                shape.y +
+                mouseInfluenceY *
+                (index % 2 === 0
+                    ? -1
+                    : 1) -
+                smoothScroll *
+                height *
+                0.25;
+
+
+            const rotation =
+                shape.rotation +
+                Math.sin(
+                    time * 0.0004 +
+                    index
+                ) *
+                0.08;
+
+
+            ctx.save();
+
+            ctx.translate(
+                x,
+                y
+            );
+
+            ctx.rotate(
+                rotation
+            );
+
+            ctx.globalAlpha =
+                0.92;
+
+
+            if (
+                shape.type === "circle"
+            ) {
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    0,
+                    0,
+                    shape.size / 2,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle =
+                    shape.color;
+
+                ctx.fill();
+
+            } else {
+
+                ctx.fillStyle =
+                    shape.color;
+
+                ctx.fillRect(
+                    -shape.size / 2,
+                    -shape.size / 2,
+                    shape.size,
+                    shape.size
+                );
+
+            }
+
+
+            ctx.restore();
+
+        }
+    );
+
+}
+
+
+/* =================================
+   DRAW TECHNICAL MARKS
+================================= */
+
+function drawTechnicalMarks() {
+
+    const margin = 28;
+
+    ctx.save();
+
+    ctx.fillStyle =
+        "rgba(17,17,17,0.45)";
+
+    ctx.font =
+        "700 8px Arial";
+
+    ctx.letterSpacing =
+        "2px";
+
+
+    ctx.fillText(
+        "SYSTEM / 001",
+        margin,
+        height - margin
+    );
+
+
+    ctx.fillText(
+        "AI / AUTOMATION / DIGITAL SYSTEMS",
+        width - 210,
+        height - margin
+    );
+
+
+    ctx.strokeStyle =
+        "rgba(17,17,17,0.25)";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        margin,
+        height - 48
+    );
+
+    ctx.lineTo(
+        margin + 90,
+        height - 48
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+}
+
+
+/* =================================
+   LIVING PARTICLES
+================================= */
+
+function drawParticles() {
+
+    particles.forEach(
+        (particle, index) => {
+
+            particle.phase +=
+                particle.speed;
+
+
+            const driftX =
+                Math.sin(
+                    particle.phase +
+                    index
+                ) *
+                10;
+
+
+            const driftY =
+                Math.cos(
+                    particle.phase *
+                    0.7 +
+                    index
+                ) *
+                10;
+
+
+            const x =
+                particle.x *
+                width +
+                driftX;
+
+
+            const y =
+                particle.y *
+                height +
+                driftY -
+                smoothScroll *
+                height *
+                0.12;
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                particle.size,
+                0,
+                Math.PI * 2
+            );
+
+
+            if (
+                particle.type === 0
+            ) {
+
+                ctx.fillStyle =
+                    "rgba(230,59,50,0.38)";
+
+            } else if (
+                particle.type === 1
+            ) {
+
+                ctx.fillStyle =
+                    "rgba(22,136,201,0.38)";
+
+            } else {
+
+                ctx.fillStyle =
+                    "rgba(17,17,17,0.25)";
+
+            }
+
+
+            ctx.fill();
+
+        }
+    );
+
+}
+
+
+/* =================================
+   CORE GEOMETRY
+================================= */
+
+function drawCoreGeometry(core) {
+
+    const pulse =
+        Math.sin(
+            time * 0.0015
+        ) *
+        5;
+
+
+    ctx.save();
+
+    ctx.translate(
+        core.x,
+        core.y
+    );
+
+
+    /* outer square */
+
+    ctx.strokeStyle =
+        "rgba(17,17,17,0.35)";
+
+    ctx.lineWidth = 1;
+
+    ctx.strokeRect(
+        -130 - pulse,
+        -130 - pulse,
+        260 + pulse * 2,
+        260 + pulse * 2
+    );
+
+
+    /* blue axis marker */
+
+    ctx.fillStyle =
+        COLORS.blue;
+
+    ctx.fillRect(
+        -105,
+        -5,
+        210,
+        10
+    );
+
+
+    /* yellow marker */
+
+    ctx.fillStyle =
+        COLORS.yellow;
+
+    ctx.fillRect(
+        -5,
+        -105,
+        10,
+        210
+    );
+
+
+    /* red corner */
+
+    ctx.fillStyle =
+        COLORS.red;
+
+    ctx.fillRect(
+        92,
+        92,
+        28,
+        28
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =================================
+   MAIN DRAW
 ================================= */
 
 function draw() {
+
+    time += 16;
+
+
+    /* smooth mouse */
+
+    mouseX +=
+        (targetMouseX - mouseX) *
+        0.055;
+
+    mouseY +=
+        (targetMouseY - mouseY) *
+        0.055;
+
+
+    /* smooth scroll */
+
+    smoothScroll +=
+        (scrollProgress - smoothScroll) *
+        0.06;
+
 
     ctx.clearRect(
         0,
@@ -345,202 +1026,106 @@ function draw() {
     );
 
 
-    const cx = width / 2;
-    const cy = height / 2;
+    const core =
+        getCorePosition();
+
 
     const positions =
         getSystemPositions();
 
 
     /* =================================
-       RADIAL GRID
+       BACKGROUND
     ================================= */
 
-    ctx.save();
+    drawGrid();
 
-    ctx.translate(
-        cx,
-        cy
-    );
+    drawShapes();
 
-    ctx.strokeStyle =
-        "rgba(100,170,200,0.07)";
+    drawParticles();
 
-    ctx.lineWidth = 1;
-
-
-    for (
-        let r = 120;
-        r < 700;
-        r += 60
-    ) {
-
-        ctx.beginPath();
-
-        ctx.arc(
-            0,
-            0,
-            r,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.stroke();
-
-    }
-
-
-    for (
-        let a = 0;
-        a < Math.PI * 2;
-        a += Math.PI / 12
-    ) {
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            0,
-            0
-        );
-
-        ctx.lineTo(
-            Math.cos(a) * 850,
-            Math.sin(a) * 850
-        );
-
-        ctx.stroke();
-
-    }
-
-    ctx.restore();
+    drawTechnicalMarks();
 
 
     /* =================================
-       CORE CONNECTIONS
+       CORE SYSTEM
+    ================================= */
+
+    drawAxis(
+        core
+    );
+
+
+    drawCoreGeometry(
+        core
+    );
+
+
+    /* =================================
+       CONNECTIONS
     ================================= */
 
     drawConnection(
-        cx,
-        cy,
-        positions.launch.x,
-        positions.launch.y,
+        core,
+        positions.launch,
+        COLORS.red,
         selectedSystem === "launch"
     );
 
 
     drawConnection(
-        cx,
-        cy,
-        positions.automate.x,
-        positions.automate.y,
+        core,
+        positions.automate,
+        COLORS.blue,
         selectedSystem === "automate"
     );
 
 
     drawConnection(
-        cx,
-        cy,
-        positions.build.x,
-        positions.build.y,
+        core,
+        positions.build,
+        COLORS.black,
         selectedSystem === "build"
     );
 
 
     drawConnection(
-        cx,
-        cy,
-        positions.manage.x,
-        positions.manage.y,
+        core,
+        positions.manage,
+        COLORS.yellow,
         selectedSystem === "manage"
     );
 
 
     /* =================================
-       OUTER NETWORK
+       OUTER SYSTEM
     ================================= */
 
     drawConnection(
-        positions.launch.x,
-        positions.launch.y,
-        positions.automate.x,
-        positions.automate.y
+        positions.launch,
+        positions.automate,
+        COLORS.red
     );
 
 
     drawConnection(
-        positions.automate.x,
-        positions.automate.y,
-        positions.build.x,
-        positions.build.y
+        positions.automate,
+        positions.build,
+        COLORS.blue
     );
 
 
     drawConnection(
-        positions.build.x,
-        positions.build.y,
-        positions.manage.x,
-        positions.manage.y
+        positions.build,
+        positions.manage,
+        COLORS.black
     );
 
 
     drawConnection(
-        positions.manage.x,
-        positions.manage.y,
-        positions.launch.x,
-        positions.launch.y
-    );
-
-
-    /* =================================
-       LIVING PARTICLES
-    ================================= */
-
-    particles.forEach(
-        p => {
-
-            const currentSpeed =
-                p.speed +
-                (mouseVelocity * 0.00018);
-
-            p.angle += currentSpeed;
-
-            mouseVelocity *= 0.985;
-
-
-            const x =
-                cx +
-                Math.cos(
-                    p.angle
-                ) *
-                p.radius;
-
-
-            const y =
-                cy +
-                Math.sin(
-                    p.angle
-                ) *
-                p.radius *
-                0.55;
-
-
-            ctx.beginPath();
-
-            ctx.arc(
-                x,
-                y,
-                p.size,
-                0,
-                Math.PI * 2
-            );
-
-
-            ctx.fillStyle =
-                "rgba(150,220,240,0.50)";
-
-            ctx.fill();
-
-        }
+        positions.manage,
+        positions.launch,
+        COLORS.yellow
     );
 
 
@@ -552,7 +1137,8 @@ function draw() {
         packet => {
 
             packet.progress +=
-                packet.speed;
+                packet.speed *
+                (1 + smoothScroll * 1.5);
 
 
             drawPacket(
@@ -576,6 +1162,7 @@ function draw() {
     );
 
 }
+
 
 draw();
 
@@ -763,7 +1350,7 @@ const panelAction =
 
 
 /* =================================
-   RENDER SYSTEM FLOW
+   RENDER FLOW
 ================================= */
 
 function renderFlow(flow) {
@@ -1020,7 +1607,7 @@ const secondaryButtons =
 
 
 /* =================================
-   OPEN SECONDARY SECTION
+   OPEN SECONDARY
 ================================= */
 
 function openSecondary(
@@ -1103,7 +1690,7 @@ secondaryButtons.forEach(
 
 
 /* =================================
-   CLOSE SECONDARY PANEL
+   CLOSE SECONDARY
 ================================= */
 
 closeSecondary.addEventListener(
@@ -1188,10 +1775,6 @@ if (contactForm) {
             }
 
 
-            /* =================================
-               BUILD EMAIL
-            ================================= */
-
             const recipient =
                 "futrbit@gmail.com";
 
@@ -1234,21 +1817,13 @@ if (contactForm) {
                 );
 
 
-            /* =================================
-               OPEN EMAIL CLIENT
-            ================================= */
-
-            const mailto =
+            window.location.href =
                 "mailto:" +
                 recipient +
                 "?subject=" +
                 subject +
                 "&body=" +
                 body;
-
-
-            window.location.href =
-                mailto;
 
         }
     );
@@ -1296,13 +1871,10 @@ document.addEventListener(
                     node.classList.remove(
                         "active"
                     )
-        );
+            );
 
 
         selectedSystem = null;
 
     }
 );
-
-
-
